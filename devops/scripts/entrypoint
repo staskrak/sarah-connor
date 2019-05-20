@@ -1,0 +1,7 @@
+#!/bin/sh
+set +e
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+php-fpm -t
+chown -R www-data:www-data /var/www
+php-fpm -O

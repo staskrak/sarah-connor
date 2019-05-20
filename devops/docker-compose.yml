@@ -1,0 +1,16 @@
+version: '3.6'
+
+services:
+  php:
+    build:
+      context: ./image/php
+      args:
+        UID: ${UID}
+        GID: ${GID}
+    env_file:
+      - .env
+    container_name: sarah-connor
+    tty: true
+    stdin_open: true
+    volumes:
+      - ../:/var/www
