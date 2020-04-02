@@ -14,3 +14,23 @@ services:
     stdin_open: true
     volumes:
       - ../:/var/www
+
+  nginx:
+    build:
+      context: image/nginx
+      args:
+        SERVER_NAME: ${SERVER_NAME}
+    volumes:
+      - ../public:/var/www/service/public:ro
+    depends_on:
+      - php
+    networks:
+      - metro
+      - default
+
+networks:
+  default:
+    driver: bridge
+  metro:
+    external: true # if not created manually run command `docker network create metro`
+
