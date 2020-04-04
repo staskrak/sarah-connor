@@ -1,36 +1,51 @@
 version: '3.6'
 
 services:
-  php:
+  php-fpm:
+    container_name: sarah-connor_php_fpm
     build:
-      context: ./image/php
+      context: ./image/php-fpm
       args:
+        XDEBUG: ${XDEBUG}
         UID: ${UID}
         GID: ${GID}
     env_file:
       - .env
-    container_name: sarah-connor
-    tty: true
-    stdin_open: true
     volumes:
-      - ../:/var/www
+      - ../:/var/www:delegated
+    networks:
+      - sarah-connor-network
+      - default
 
   nginx:
+    container_name: sarah-connor_nginx
     build:
       context: image/nginx
       args:
         SERVER_NAME: ${SERVER_NAME}
-    volumes:
-      - ../public:/var/www/service/public:ro
     depends_on:
-      - php
+      - php-fpm
     networks:
-      - metro
+      - sarah-connor-network
+      - default
+
+  db:
+    container_name: sarah-connor_db
+    image: mysql:${APP_DB_VERSION}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${APP_DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${APP_DB_DATABASE}
+      MYSQL_USER: ${APP_DB_USER}
+      MYSQL_PASSWORD: ${APP_DB_PASSWORD}
+    volumes:
+      - database:/var/lib/mysql
+    networks:
+      - sarah-connor-network
       - default
 
 networks:
   default:
     driver: bridge
-  metro:
-    external: true # if not created manually run command `docker network create metro`
+  sarah-connor-network:
+    external: true # if not created manually run command `docker network create sarah-connor`
 

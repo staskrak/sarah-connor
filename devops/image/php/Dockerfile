@@ -52,4 +52,5 @@ USER www-data
 RUN mkdir -p ~/.ssh/ && \
    echo -e "Host bitbucket.org\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
+EXPOSE 9000
 CMD ["php"]
