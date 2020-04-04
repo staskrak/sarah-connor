@@ -1,4 +1,6 @@
 {
+    "name": "sarah-connor/symfony5",
+    "description": "This is just a sandbox",
     "type": "project",
     "license": "proprietary",
     "require": {
