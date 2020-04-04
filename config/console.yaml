@@ -1,4 +1,0 @@
-services:
-  App\Console\RunSarah:
-    tags:
-      - { name: 'console.command' }

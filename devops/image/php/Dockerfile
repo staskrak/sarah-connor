@@ -2,6 +2,7 @@ FROM alpine:3.8
 
 ARG UID=1000
 ARG GID=1000
+ARG XDEBUG=1
 
 RUN apk add --update --no-cache curl \
     php7 \
@@ -18,6 +19,7 @@ RUN apk add --update --no-cache curl \
     php7-ctype \
     php7-pdo \
     php7-pdo_mysql \
+    php7-sqlite3 \
     php7-phar \
     php7-tokenizer \
     php7-fileinfo \
@@ -27,10 +29,18 @@ RUN apk add --update --no-cache curl \
     php7-redis \
     git \
     openssh \
+    sqlite \
     && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && \
     composer global require hirak/prestissimo
+
+# Install Xdebug
+RUN if [ "$XDEBUG" = "1" ]; then \
+    apk add --update --no-cache php7-xdebug; \
+    fi
+COPY ./config/xdebug.ini /etc/php7/conf.d/xdebug-dev.ini
+
 
 RUN addgroup -g ${GID} www-data && \
     adduser -D -u ${UID} -G www-data www-data
@@ -42,4 +52,5 @@ USER www-data
 RUN mkdir -p ~/.ssh/ && \
    echo -e "Host bitbucket.org\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
+EXPOSE 9000
 CMD ["php"]
