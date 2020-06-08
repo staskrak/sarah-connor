@@ -28,6 +28,10 @@ services:
     networks:
       - sarah-connor-network
       - default
+    volumes:
+      - ../var/log/nginx:/var/log/nginx:delegated
+    ports:
+      - 8043:8081
 
   db:
     container_name: sarah-connor_db
@@ -37,8 +41,8 @@ services:
       MYSQL_DATABASE: ${APP_DB_DATABASE}
       MYSQL_USER: ${APP_DB_USER}
       MYSQL_PASSWORD: ${APP_DB_PASSWORD}
-    volumes:
-      - database:/var/lib/mysql
+#    volumes:
+#      - database:/var/lib/mysql
     networks:
       - sarah-connor-network
       - default
