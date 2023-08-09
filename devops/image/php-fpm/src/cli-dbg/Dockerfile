@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM alpine:3.16.7
 
 ENV PHPIZE_DEPS autoconf dpkg-dev dpkg file g++ gcc libc-dev make	pkgconf re2c argon2-dev coreutils curl-dev libedit-dev libsodium-dev libxml2-dev openssl-dev sqlite-dev
 ENV PHP_DEPS build-base autoconf curl-dev gmp-dev libpng-dev libxml2-dev libmcrypt-dev rabbitmq-c-dev imagemagick-dev icu-dev librdkafka-dev libzip-dev
