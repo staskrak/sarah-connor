@@ -1,4 +1,4 @@
-FROM nginx:1.16.1-alpine
+FROM nginx:1.24-alpine
 
 RUN set -exu \
   && ln -sf /proc/1/fd/1 /var/log/nginx/access.log \
